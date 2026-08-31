@@ -1,0 +1,120 @@
+.chatWidget {
+	position: fixed;
+	bottom: 5.5rem;
+	right: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.25rem;
+	z-index: 999;
+	opacity: 0;
+	transform: translateY(20px) scale(0.95);
+	pointer-events: none;
+	transition:
+		opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+		transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+	&.open {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		pointer-events: all;
+		animation: widgetFloat 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+}
+
+.chatHeader {
+	width: fit-content;
+	padding: 0.5rem;
+	border-radius: 9999px;
+	background: hsl(var(--colorBrandPrimary));
+	color: white;
+	opacity: 0;
+
+	.chatHeaderContent {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+
+		h3 {
+			color: white;
+			margin: 0;
+			font-size: 1.25rem;
+			font-variation-settings:
+				'wdth' 75,
+				'wght' 600;
+			letter-spacing: 0.02em;
+		}
+	}
+
+	.chatAvatar {
+		width: 3rem;
+		height: 3rem;
+		border-radius: 999px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		i {
+			color: white;
+		}
+	}
+}
+
+.chatInput {
+	--primaryColor: var(--colorBackgroundPrimary);
+	--secondaryColor: var(--colorBackgroundPrimary);
+	width: 100%;
+	height: 52px;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	box-shadow: 0 0 0 1px hsl(var(--colorBrandPrimary)) !important;
+
+	input {
+		font-size: 14px;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 400;
+	}
+}
+
+@keyframes fabSlideIn {
+	0% {
+		opacity: 0;
+		transform: translateY(100px) scale(0);
+	}
+	60% {
+		transform: translateY(-10px) scale(1.1);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes widgetFloat {
+	0% {
+		opacity: 0;
+		transform: translateY(30px) scale(0.9);
+	}
+	60% {
+		transform: translateY(-5px) scale(1.02);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@media (width <= 750px) {
+	.chatWidget {
+		bottom: 4.8rem;
+		right: 0.5rem;
+		width: calc(100dvw - 1rem) !important;
+		height: calc(100dvh - 5.5rem) !important;
+
+		.chatHeader {
+			display: none;
+		}
+	}
+}
