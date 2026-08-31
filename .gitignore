@@ -24,9 +24,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env
-.env*.local
+# environment files
+# Never commit real environment files. .env.test is intentionally versioned
+# and must contain test/dummy values only.
+.env*
+!.env.test
 .env copy
 
 # vercel
