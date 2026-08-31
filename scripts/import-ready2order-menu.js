@@ -1,9 +1,10 @@
-require("dotenv").config();
+require("dotenv").config({ path: ".env.local" });
 const mongoose = require("mongoose");
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const TOKEN = process.env.READY2ORDER_ACCOUNT_TOKEN;
 const RESTAURANT_ID = process.env.RESTAURANT_ID || "qrorder";
+const API_BASE = process.env.READY2ORDER_API_BASE || "https://api.ready2order.com/v1";
 
 if (!MONGODB_URI) throw new Error("MONGODB_URI missing");
 if (!TOKEN) throw new Error("READY2ORDER_ACCOUNT_TOKEN missing");
@@ -31,7 +32,7 @@ function mapCategory(product) {
 }
 
 async function fetchProducts() {
-  const res = await fetch("https://api.ready2order.com/v1/products?limit=500&includeProductGroup=true", {
+  const res = await fetch(`${API_BASE}/products?limit=500&includeProductGroup=true`, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
       Accept: "application/json",
