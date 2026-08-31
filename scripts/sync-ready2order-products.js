@@ -1,4 +1,4 @@
-require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local" });
 
 const mongoose = require("mongoose");
 
@@ -123,11 +123,9 @@ async function fetchAllProducts() {
   return products;
 }
 
-
 function parseReadyDate(value) {
   if (!value) return null;
 
-  // ready2order liefert z. B. "2026-03-07 15:55:51"
   const normalized = String(value).replace(" ", "T");
   const date = new Date(normalized);
 
@@ -167,14 +165,10 @@ async function syncProducts() {
           $set: {
             restaurantID: RESTAURANT_ID,
             ready2orderProductId: product.product_id,
-
-            // Vollständige, unveränderte API-Antwort
             data: product,
-
             sourceUpdatedAt: parseReadyDate(
               product.product_updated_at
             ),
-
             syncedAt: syncTime,
           },
         },
@@ -194,14 +188,6 @@ async function syncProducts() {
     console.log("Gefunden:", result.matchedCount);
   }
 
-  /*
-   * Alles löschen, was ready2order beim aktuellen vollständigen Abruf
-   * nicht mehr zurückgegeben hat.
-   *
-   * Wichtig: Das ist nur sicher, wenn fetchAllProducts wirklich alle
-   * Seiten erfolgreich geladen hat. Bei einem API-Fehler wird vorher
-   * abgebrochen und hier nichts gelöscht.
-   */
   const deleteResult = await ReadyProducts.deleteMany({
     restaurantID: RESTAURANT_ID,
     ready2orderProductId: {
