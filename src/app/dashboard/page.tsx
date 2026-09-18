@@ -7,8 +7,13 @@ import PageContainer from "./_components/PageContainer";
 import "./dashboard.scss";
 
 const navItems = [
-	{ label: "orders", icon: "e43b", value: "orders" },
-	{ label: "settings", icon: "f013", value: "settings" },
+	{ label: "Orders", icon: "e43b", value: "orders" },
+	{ label: "Tische", icon: "f0ce", value: "tables" },
+	{ label: "Menü", icon: "f03a", value: "menu" },
+	{ label: "Geschäftszeiten", icon: "f017", value: "hours" },
+	{ label: "Design", icon: "f53f", value: "design" },
+	{ label: "Profil", icon: "f007", value: "profile" },
+	{ label: "Logout", icon: "f011", value: "signout" },
 ];
 
 export async function generateMetadata({ searchParams }: IMetaDataProps) {

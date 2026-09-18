@@ -54,7 +54,7 @@ export const ChatInterface = () => {
 						<div className="chatHeader">
 							<div className="chatHeaderContent">
 								<div className="chatAvatar">
-									<Icon code="f544" set="duotone" type="solid" size={28} />
+									<Icon code="f544" set="duotone" type="solid" style={{ fontSize: 28 }} />
 								</div>
 							</div>
 						</div>

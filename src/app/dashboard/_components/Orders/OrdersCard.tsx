@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "xtreme-ui";
 
 import type { TOrder } from "#utils/database/models/order";
+import { formatEuro } from "#utils/helper/currency";
 
 import "./ordersCard.scss";
 
@@ -36,13 +37,13 @@ const OrdersCard = (props: TOrdersCard) => {
 							type="primaryDanger"
 							icon="f00d"
 							iconType="solid"
-							label={!reject ? "Cancel" : "No Don't"}
 							onClick={() => {
 								setReject?.({
 									_id: !reject ? data._id.toString() : null,
 									details: false,
 								});
 							}}
+							label={!reject ? "Cancel" : "No Don't"}
 						/>
 					)}
 				</div>
@@ -94,8 +95,8 @@ const OrdersCard = (props: TOrdersCard) => {
 				{!data?.products?.length ? (
 					<p className="noContent">No orders yet</p>
 				) : (
-					<p className="total rupee" onClick={() => showDetails?.(true)}>
-						{data?.orderTotal}
+					<p className="total" onClick={() => showDetails?.(true)}>
+						{formatEuro(data?.orderTotal ?? 0)}
 					</p>
 				)}
 				<OptionButtons />

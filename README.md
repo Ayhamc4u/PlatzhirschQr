@@ -1,123 +1,129 @@
+# PlatzhirschQR
 
-# OrderWorder – Contactless Restaurant Ordering System
+PlatzhirschQR ist die Bestellplattform für den Platzhirsch. Die Anwendung verbindet die Speisekarte aus ready2order mit zwei Bestellwegen:
 
-[![Live](https://img.shields.io/badge/Built_using-XtremeUI-blue?style=flat-square)](https://github.com/itzzritik/XtremeUI)
-[![Live Demo](https://img.shields.io/badge/Try_Live-Demo-green?style=flat-square)](https://orderworder.ritik.me)
-![Made with ❤️](https://img.shields.io/badge/Made_with-%E2%9D%A4-red?style=flat-square)
-[![Next JS](https://img.shields.io/badge/Next-black?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white)](https://sass-lang.com/)
+1. **Im Lokal:** Bestellung über den QR-Code am Tisch.
+2. **Online:** Bestellung von außerhalb zur Abholung.
 
+Das Projekt basiert auf Next.js, React, MongoDB, NextAuth und SCSS. Die aktive Entwicklung findet derzeit im Branch `refactor/platzhirsch-core` statt.
 
-![OrderWorder Banner](public/screenshots/restaurant_banner.jpg)
+## Aktueller Funktionsumfang
 
----
+- Speisekarte und Produktdaten aus ready2order synchronisieren
+- Tische aus ready2order synchronisieren
+- stabile QR-Tokens für Tischbestellungen
+- explizite Bestelltypen `DINE_IN` und `PICKUP` im Order-Modell; `DELIVERY` ist für später vorbereitet
+- produktbezogene Freigabe je Bestellart über `availableOrderTypes`
+- serverseitige Prüfung, ob ein Produkt für Tischservice bzw. Abholung freigegeben ist
+- konfigurierbarer ready2order-Trainingsmodus für Entwicklungs- und Testbestellungen
+- Online-Bestellung zur Abholung mit eingeschränktem Menü
+- globale Produktsuche innerhalb des jeweils freigegebenen Bestellangebots
+- Abholzeit anhand der aktuellen Auslastung schätzen
+- automatische Annahme nur bei freiem `Abh1`–`Abh5` und höchstens 30 Minuten geschätzter Abholzeit
+- Reserve über `Abh6`–`Abh10` mit manueller Bestätigung
+- Abholbestellung bei vollständig belegten `Abh1`–`Abh10` sperren
+- Preise im österreichischen Euro-Format anzeigen
+- MongoDB als Applikationsdatenbank
+- mehrstufiges Production-Dockerfile mit Next.js-Standalone-Runner
+- ready2order-Synchronisation beim Containerstart
+- GitHub Actions Workflow für Docker-/OCI-Packages in GHCR
 
-## 🚀 Overview  
-OrderWorder is a full-stack, AI-powered contactless dining platform designed to digitize restaurant operations. From scanning a QR code to placing an order, chatting with an intelligent AI assistant, and managing kitchen workflows - everything runs on a clean, modern web app built with **Next.js**, **MongoDB**, and **SCSS**.
+Im Abholmenü ist `Burger` die Standardkategorie. `Abhofverkauf` ist dort eine virtuelle Oberkategorie für `Öl`, `Most` und `Wein`; die Kategorie `Weine` bleibt ausschließlich der Speisekarte im Lokal zugeordnet.
 
----
+Die ready2order-Kategorie entscheidet nicht dauerhaft darüber, über welchen Bestellweg ein Produkt verkauft werden darf. Diese Zuordnung wird pro Produkt gespeichert, damit sie später im Admin-Bereich unabhängig für Tischservice, Abholung und Lieferung gepflegt werden kann.
 
-## ✨ Features  
-- 📱 **QR Code-Based Access**: Every table gets a unique QR code for instant menu access.  
-- 🤖 **AI-Powered Assistant**: Chat with Jarvis, your intelligent restaurant assistant for personalized menu recommendations.  
-- 🍽️ **Smart Ordering**: Customers can browse menus, add items, and place orders - no app download required.  
-- 🧑‍🍳 **Live Kitchen Dashboard**: Real-time order updates for chefs to prep efficiently.  
-- 🧑‍💼 **Admin Panel**: Manage tables, orders, inventory, payroll, and more.  
-- ⚡ **Real-Time UI**: Fast, responsive, and optimized for mobile/tablet/desktop.  
-- 🌗 **Dark Theme Support**: Modern design with animation and smooth transitions.
+Weitere technische Details befinden sich unter [`docs/`](docs/README.md). Container- und Package-Details stehen in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
----
+## Voraussetzungen für lokale Entwicklung
 
-## 🧠 AI Integration (Jarvis)
-Built on **Google Gemini (Gemma-27b)** via **Vercel AI SDK**, Jarvis uses advanced prompt engineering to act as a virtual waiter.
-- **Context-Aware**: Dynamically injects real-time menu data (MongoDB) into system prompts for accurate allergen/ingredient answers.
-- **Structured Output**: Uses custom tokens to return direct item recommendations adjacent to natural language responses.
-- **No Vectors Required**: efficient, real-time context injection without complex vector databases.
+Empfohlen:
 
----
+- Linux / WSL / macOS
+- Git
+- nvm
+- Zugriff auf die MongoDB
+- ready2order Account Token für Synchronisationen
 
-## 🛠️ Tech Stack  
-- **Frontend**: React + Next.js  
-- **Styling**: SCSS (SASS)  
-- **Backend**: API Routes in Next.js  
-- **Database**: MongoDB  
-- **Hosting**: Vercel  
-- **Authentication**: NextAuth.js  
-- **State Management**: React Context + Redux
-- **AI & Chatbot**: Vercel AI SDK + Google Gemini (Gemma-27b)
+Die Projektversionen sind festgelegt auf:
 
----
+- Node.js **22.22.3** (`.nvmrc`)
+- pnpm **11.25.0** (`package.json` / Corepack)
 
-## 🔍 Try it out
-Orderworder has two interfaces, one for **customers** and one for **restaurant's admin**.
+## Lokale Installation
 
-### 🧑 Customer Login:
-<table>
-	<tr>
-		<td>
-			<ul>
-				<img src="public/screenshots/px.png" width="0px" height="0px">
-				<li>Goto <a href="https://orderworder.ritik.me/starbucks?table=1">Starbucks Menu Page</a> or Scan the QR Code</li>
-				<li>Click on order button</li>
-				<li>Enter Name and Phone (10 digit number format)</li>
-				<li>Login complete, now add few items in cart and place order</li>
-				<img src="public/screenshots/px.png" width="500px" height="0px">
-			</ul>
-		</td>
-		<td width="200px">
-			<p align="center">
-				<picture>
-					<source media="(prefers-color-scheme: dark)" srcset="public/screenshots/restaurant_qrcode_dark.png" />
-					<source media="(prefers-color-scheme: light)" srcset="public/screenshots/restaurant_qrcode_light.png" />
-					<img alt="OrderWorderQR" src="public/screenshots/restaurant_qr_light.png" />
-				</picture>
-			</p>
-		</td>
-	</tr>
-</table>
+Repository klonen bzw. aktualisieren:
 
-### 👨‍💼 Admin Login (Open in separate browser):
-<table>
-	<tr>
-		<td>
-			<ul>
-				<img src="public/screenshots/px.png" width="0px" height="0px">
-				<li>Goto <a href="https://orderworder.ritik.me">Homepage</a>, and scroll down to login section</li>
-				<li>Enter email: <code>admin@starbucks.com</code></li>
-				<li>Enter password: <code>starbucks@123</code></li>
-				<li>Login complete, Now visit <a href="https://orderworder.ritik.me/dashboard">Admin Dashboard</a> or <a href="https://orderworder.ritik.me/kitchen">Kitchen Dashboard</a></li>
-				<img src="public/screenshots/px.png" width="700px" height="0px">
-			</ul>
-		</td>
-	</tr>
-</table>
+```bash
+git clone https://github.com/InterCroneworldOrg/PlatzhirschQR.git
+cd PlatzhirschQR
+git checkout refactor/platzhirsch-core
+git pull
+```
 
----
+Danach reicht normalerweise:
 
-## 🖼️ Screenshots
+```bash
+source ./setup.sh
+```
 
-### 📋 Menu Interface
-<p align="center">
-  <img src="public/screenshots/restaurant_menu.png" width="49%">
-  <img src="public/screenshots/restaurant_cart.png" width="49%">
-</p>
+Das Setup-Script lädt/aktiviert die korrekte Node-Version, aktiviert pnpm über Corepack, installiert die Abhängigkeiten, erstellt bei Bedarf `.env.local` aus `.env.example` und prüft die benötigten Environment-Variablen.
 
-### 🛠️ Admin Dashboard
-<p align="center">
-  <img src="public/screenshots/dashboard_requests.png" width="49%">
-  <img src="public/screenshots/dashboard_active.png" width="49%">
-</p>
+Anschließend:
 
----
+```bash
+pnpm dev
+```
 
-## 📌 Tags  
-`nextjs` `react` `javascript` `mongo` `sass` `typescript` `ai` `chatbot` `ai-assistant` `admin-panel` `dashboard` `qr-code` `realtime` `restaurant` `ecommerce` `responsive` `dark-theme` `ui` `animation` `scanner`
+`pnpm dev` synchronisiert vor dem Start Produkte, Menüs und Tische aus ready2order und startet die Anwendung anschließend lokal auf Port `3050`.
 
----
+Die Anwendung läuft lokal unter:
 
-## ⭐ Support the Project  
-If you find OrderWorder useful, please give it a ⭐ on GitHub!  
-Have ideas or improvements? Contributions via issues or pull requests are warmly welcome!
+```text
+http://localhost:3050
+```
 
-Test. 
+Ausführliche Hinweise und Fehlerbehebung: [`docs/LOCAL_DEVELOPMENT.md`](docs/LOCAL_DEVELOPMENT.md).
+
+## Lokale Umgebungsvariablen
+
+Echte Zugangsdaten gehören ausschließlich in `.env.local`. Diese Datei wird absichtlich **nicht** in Git eingecheckt.
+
+Die versionierte Vorlage liegt in:
+
+```text
+.env.example
+```
+
+Aktuell erwartete Variablen:
+
+```env
+MONGODB_URI="mongodb://USER:PASSWORD@HOST:27017/qrorder?authSource=admin"
+RESTAURANT_ID=platzhirsch
+PUBLIC_APP_URL=http://localhost:3050
+
+READY2ORDER_API_BASE=https://api.ready2order.com/v1
+READY2ORDER_ACCOUNT_TOKEN=DEIN_TOKEN
+READY2ORDER_TRAINING_MODE=true
+
+NEXTAUTH_URL=http://localhost:3050
+NEXTAUTH_SECRET=DEIN_SECRET
+
+DINEIN_QR_SECRET=DEIN_LOKALES_SECRET
+DINEIN_ACCESS_MODE=development
+
+SYNC_READY2ORDER_ON_STARTUP=true
+```
+
+Für lokale Entwicklung und Tests soll `READY2ORDER_TRAINING_MODE=true` gesetzt sein. Der Bestell-Endpoint behandelt einen fehlenden Wert ebenfalls sicherheitshalber als Trainingsmodus. Erst für den echten Produktivbetrieb wird die Variable bewusst auf `false` gesetzt.
+
+`SYNC_READY2ORDER_ON_STARTUP` wird vom Docker-Container verwendet. Standardmäßig werden Produkte, Menüs und Tische vor dem Start des Next.js-Servers synchronisiert.
+
+Wichtig bei MongoDB:
+
+```text
+...:27017/qrorder?authSource=admin
+```
+
+`qrorder` ist die Datenbank mit den Platzhirsch-Daten. `authSource=admin` bezeichnet nur die Datenbank, gegen die sich der MongoDB-Benutzer authentifiziert.
+
+`.env.test` darf nur Dummy-/Testwerte enthalten. `.env.example` darf ausschließlich Platzhalter enthalten.

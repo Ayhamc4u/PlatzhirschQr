@@ -1,0 +1,35 @@
+.menuEditor {
+	.adminCategoryCard.hoursOpen { grid-column: span 2; }
+	.categoryHoursToggle { width:100%; margin-top:7px; padding:7px 9px; border:1px solid color-mix(in srgb, var(--colorContentPrimary) 12%, transparent); border-radius:7px; background:transparent; color:var(--colorContentSecondary); font-size:10px; font-weight:800; cursor:pointer; }
+	.categoryHoursToggle.custom { border-color:color-mix(in srgb, #d9a441 55%, transparent); color:#d9a441; }
+	.categoryHoursEditor { margin-top:10px; padding-top:10px; border-top:1px solid color-mix(in srgb, var(--colorContentPrimary) 10%, transparent); }
+	.categoryHoursMode { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+	.categoryHoursMode button { min-height:34px; border:1px solid color-mix(in srgb, var(--colorContentPrimary) 13%, transparent); border-radius:7px; background:var(--colorBackgroundSecondary); color:var(--colorContentSecondary); font-size:10px; font-weight:800; cursor:pointer; }
+	.categoryHoursMode button.active { border-color:#d9a441; background:color-mix(in srgb, #d9a441 14%, var(--colorBackgroundPrimary)); color:var(--colorContentPrimary); }
+	.categoryHoursInherited { margin:10px 0 0; color:var(--colorContentSecondary); font-size:10px; line-height:1.45; }
+	.categoryHoursDays { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; margin-top:9px; }
+	.categoryHoursDay { padding:8px; border:1px solid color-mix(in srgb, var(--colorContentPrimary) 10%, transparent); border-radius:8px; background:var(--colorBackgroundSecondary); }
+	.categoryHoursDay.closed { opacity:.72; }
+	.categoryHoursDayHead { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+	.categoryHoursDayHead strong { font-size:11px; }
+	.categoryHoursDayHead label { display:flex; align-items:center; gap:4px; color:var(--colorContentSecondary); font-size:9px; }
+	.categoryHoursRanges { display:flex; flex-direction:column; gap:5px; margin-top:6px; }
+	.categoryHoursRange { display:grid; grid-template-columns:1fr auto 1fr 22px; align-items:center; gap:4px; }
+	.categoryHoursRange input { min-width:0; height:30px; padding:0 5px; border:1px solid color-mix(in srgb, var(--colorContentPrimary) 12%, transparent); border-radius:6px; background:var(--colorBackgroundPrimary); color:var(--colorContentPrimary); font-size:10px; }
+	.categoryHoursRange button { border:0; background:transparent; color:var(--status-error); font-size:16px; cursor:pointer; }
+	.categoryAddRange { width:fit-content; padding:0; border:0; background:transparent; color:#d9a441; font-size:9px; font-weight:800; cursor:pointer; }
+	.categoryHoursSave { width:100%; min-height:36px; margin-top:9px; border:0; border-radius:7px; background:#d9a441; color:#11100e; font-size:10px; font-weight:800; cursor:pointer; }
+	.categoryHoursSave:disabled,.categoryHoursMode button:disabled { opacity:.55; cursor:wait; }
+}
+
+@media (width <= 750px) {
+	.menuEditor .adminCategoryCard.hoursOpen { grid-column:1 / -1; }
+}
+
+@media (width <= 520px) {
+	.menuEditor .categoryHoursDays { grid-template-columns:1fr; }
+}
+
+@media (width <= 420px) {
+	.menuEditor .adminCategoryCard.hoursOpen { grid-column:auto; }
+}

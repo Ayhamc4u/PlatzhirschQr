@@ -3,6 +3,8 @@ import connectDB from "#utils/database/connect";
 import { Profiles } from "#utils/database/models/profile";
 import { SITE_URL } from "#utils/seo/constants";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	await connectDB();
 	const restaurants = await Profiles.find({}, { restaurantID: 1, updatedAt: 1 }).lean();

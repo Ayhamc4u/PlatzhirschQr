@@ -1,6 +1,7 @@
 import { Icon } from "xtreme-ui";
 import type { MenuSuggestion } from "../../types/chat";
 import { VEG_ICON_CODE } from "../../utils/constants/common";
+import { formatEuro } from "../../utils/helper/currency";
 import "./menuCard.scss";
 
 export function MenuCard({ item }: MenuCardProps) {
@@ -18,9 +19,9 @@ export function MenuCard({ item }: MenuCardProps) {
 			<div className="cardDesc">
 				<h4 className="cardTitle">{item.name}</h4>
 				<p className="cardSubtitle">
-					{item.veg && <Icon className={`vegBadge ${item.veg}`} code={VEG_ICON_CODE[item.veg]} type="solid" size={12} />}
+					{item.veg && <Icon className={`vegBadge ${item.veg}`} code={VEG_ICON_CODE[item.veg]} type="solid" style={{ fontSize: 12 }} />}
 					{item.veg && <span className="separator">•</span>}
-					<span>₹{item.price}</span>
+					<span>{formatEuro(item.price)}</span>
 				</p>
 			</div>
 		</button>

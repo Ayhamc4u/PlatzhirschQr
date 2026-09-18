@@ -29,8 +29,8 @@ export async function GET() {
 				const product = p as unknown as TProduct;
 				const menu = product.product as unknown as TMenu;
 				return {
-					...product,
 					...menu,
+					...product,
 					product: menu?._id,
 				};
 			});

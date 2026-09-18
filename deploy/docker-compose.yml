@@ -1,0 +1,29 @@
+services:
+  platzhirschqr:
+    image: ghcr.io/intercroneworldorg/platzhirschqr:latest
+    container_name: platzhirschqr
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    networks:
+      - web
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    depends_on:
+      - platzhirschqr
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/certbot-www:/var/www/certbot:ro
+      - ./nginx/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      - web
+
+networks:
+  web:
+    name: web

@@ -1,0 +1,44 @@
+.themeSwitcher {
+	appearance: none;
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 42px;
+	width: 42px;
+	height: 42px;
+	padding: 0;
+	border: 1px solid var(--border-subtle);
+	border-radius: 8px;
+	background: var(--surface-raised);
+	color: var(--text-primary);
+	cursor: pointer;
+	transition: border-color .15s ease, background-color .15s ease, color .15s ease;
+}
+
+.themeSwitcher:hover {
+	border-color: var(--brand-gold);
+	background: color-mix(in srgb, var(--brand-gold) 12%, var(--surface-raised));
+	color: var(--brand-gold);
+}
+
+.themeSwitcher:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--brand-gold) 42%, transparent);
+	outline-offset: 2px;
+}
+
+.themeSwitcher svg {
+	width: 21px;
+	height: 21px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+@media (width <= 750px) {
+	.themeSwitcher {
+		flex-basis: 40px;
+		width: 40px;
+		height: 40px;
+	}
+}

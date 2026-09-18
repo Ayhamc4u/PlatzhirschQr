@@ -9,12 +9,12 @@ const QuantityButton = (props: TQuantityButtonProps) => {
 	const classList = clsx("quantityButton", className, disabled && "disabled", filled && "filled", quantity && "quantityValue");
 
 	return (
-		<div className={classList}>
+		<div className={classList} aria-label="Menge auswählen">
 			<div className="hiddenContainer">
-				{!props.disabled && (
-					<div className="quantity decrease" onClick={decreaseQuantity}>
+				{!disabled && (
+					<button className="quantity decrease" type="button" onClick={decreaseQuantity} aria-label="Menge verringern">
 						<Icon code="2d" type="solid" />
-					</div>
+					</button>
 				)}
 				<div className="value">
 					{disabled && <Icon code="f00d" />}
@@ -22,9 +22,9 @@ const QuantityButton = (props: TQuantityButtonProps) => {
 				</div>
 			</div>
 			{!disabled && (
-				<div className="quantity increase" onClick={increaseQuantity}>
-					{quantity ? <Icon code="2b" type="solid" size={16} /> : "Add"}
-				</div>
+				<button className="quantity increase" type="button" onClick={increaseQuantity} aria-label="Menge erhöhen">
+					<Icon code="2b" type="solid" style={{ fontSize: 16 }} />
+				</button>
 			)}
 		</div>
 	);

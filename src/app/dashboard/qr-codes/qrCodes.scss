@@ -1,0 +1,381 @@
+.qrPrintPage {
+	min-height: 100vh;
+	padding: 32px;
+	background: var(--surface-page, #f5f5f3);
+	color: var(--text-primary, #181818);
+
+	&.embedded {
+		min-height: auto;
+		padding: 24px 32px 40px;
+	}
+}
+
+.qrPrintToolbar {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px;
+	max-width: 1200px;
+	margin: 0 auto 24px;
+}
+
+.qrPrintToolbar h1 {
+	margin: 4px 0 6px;
+	font-size: clamp(30px, 4vw, 48px);
+	line-height: 1;
+}
+
+.qrPrintToolbar p {
+	margin: 0;
+	color: var(--text-secondary, #676767);
+}
+
+.qrPrintEyebrow {
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.qrPrintActions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.qrPrimaryButton,
+.qrSecondaryButton,
+.qrFilterControls button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0 18px;
+	border-radius: 10px;
+	font: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.qrPrimaryButton {
+	border: 1px solid var(--brand-gold, #d9a441);
+	background: var(--brand-gold, #d9a441);
+	color: var(--text-on-gold, #11100e);
+}
+
+.qrPrimaryButton:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.qrSecondaryButton,
+.qrFilterControls button {
+	border: 1px solid var(--border-subtle, #d1d1cc);
+	background: var(--surface-card, #fff);
+	color: var(--text-primary, #181818);
+}
+
+.qrTableFilter {
+	max-width: 1200px;
+	margin: 0 auto 24px;
+	padding: 20px;
+	border: 1px solid var(--border-subtle, #ddd);
+	border-radius: 16px;
+	background: var(--surface-card, #fff);
+}
+
+.qrFilterHeader {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 14px;
+
+	label {
+		font-family: var(--font-heading);
+		font-size: 22px;
+		font-weight: 700;
+	}
+
+	span {
+		color: var(--text-secondary, #676767);
+		font-size: 13px;
+	}
+}
+
+.qrFilterControls {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 14px;
+
+	input {
+		min-width: min(320px, 100%);
+		min-height: 44px;
+		flex: 1;
+		padding: 0 14px;
+		border: 1px solid var(--border-subtle, #d1d1cc);
+		border-radius: 10px;
+		outline: none;
+		background: var(--surface-raised, #fff);
+		color: var(--text-primary, #181818);
+		font: inherit;
+
+		&:focus {
+			border-color: var(--brand-gold, #d9a441);
+		}
+	}
+}
+
+.qrTableChoices {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+
+	label {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		min-height: 38px;
+		padding: 0 12px;
+		border: 1px solid var(--border-subtle, #d1d1cc);
+		border-radius: 999px;
+		background: var(--surface-raised, #fff);
+		cursor: pointer;
+
+		&.selected {
+			border-color: var(--brand-gold, #d9a441);
+			background: color-mix(in srgb, var(--brand-gold, #d9a441) 16%, var(--surface-card, #fff));
+		}
+	}
+
+	input {
+		accent-color: var(--brand-gold, #d9a441);
+	}
+
+	p {
+		margin: 4px 0;
+		color: var(--text-secondary, #676767);
+	}
+}
+
+.qrLoading,
+.qrEmpty {
+	max-width: 1200px;
+	margin: 0 auto 24px;
+	padding: 20px;
+	border: 1px solid var(--border-subtle, #ddd);
+	border-radius: 12px;
+	background: var(--surface-card, #fff);
+}
+
+.qrEmpty h2 {
+	margin-top: 0;
+}
+
+.qrGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 18px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.qrCard {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 430px;
+	padding: 28px 24px 24px;
+	border: 1px solid #d8d8d3;
+	border-radius: 18px;
+	background: #fff;
+	color: #181818;
+	text-align: center;
+	break-inside: avoid;
+	page-break-inside: avoid;
+	transition: opacity 0.15s ease, border-color 0.15s ease;
+
+	&.selectedForPrint {
+		border-color: var(--brand-gold, #d9a441);
+	}
+
+	&.notSelectedForPrint {
+		opacity: 0.48;
+	}
+}
+
+.qrBrand {
+	font-size: 24px;
+	font-weight: 900;
+	letter-spacing: 0.08em;
+}
+
+.qrSubtitle {
+	margin-top: 3px;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+}
+
+.qrImage {
+	width: min(230px, 78vw);
+	aspect-ratio: 1;
+	margin: 22px auto 16px;
+}
+
+.qrImage svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.qrCard h2 {
+	margin: 4px 0 6px;
+	font-size: 30px;
+	line-height: 1.05;
+}
+
+.qrInstruction {
+	margin: 0;
+	font-size: 17px;
+	font-weight: 800;
+}
+
+.qrHint {
+	margin: 5px 0 0;
+	font-size: 12px;
+	color: #666;
+}
+
+.qrUrl {
+	width: 100%;
+	margin: 14px 0 0;
+	font-size: 10px;
+	line-height: 1.35;
+	color: #888;
+	word-break: break-all;
+}
+
+@media (max-width: 720px) {
+	.qrPrintPage,
+	.qrPrintPage.embedded {
+		padding: 20px 14px 32px;
+	}
+
+	.qrPrintToolbar {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.qrPrintActions,
+	.qrFilterControls {
+		flex-direction: column;
+	}
+
+	.qrPrimaryButton,
+	.qrSecondaryButton,
+	.qrFilterControls button,
+	.qrFilterControls input {
+		width: 100%;
+	}
+
+	.qrFilterHeader {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
+
+@media print {
+	@page {
+		size: A4 portrait;
+		margin: 10mm;
+	}
+
+	.noPrint,
+	.qrCard.notSelectedForPrint,
+	.dashboard > .navSideBar,
+	.dashboardHeader,
+	.themeSwitcher {
+		display: none !important;
+	}
+
+	html,
+	body {
+		width: auto !important;
+		height: auto !important;
+		overflow: visible !important;
+		background: #fff !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	.dashboard {
+		display: block !important;
+		height: auto !important;
+		padding: 0 !important;
+		overflow: visible !important;
+	}
+
+	.dashboardViewport,
+	.dashboardContent,
+	.settings {
+		width: auto !important;
+		height: auto !important;
+		padding: 0 !important;
+		overflow: visible !important;
+		background: #fff !important;
+	}
+
+	.qrPrintPage,
+	.qrPrintPage.embedded {
+		min-height: auto;
+		padding: 0;
+		background: #fff;
+		color: #181818;
+	}
+
+	.qrGrid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 8mm;
+		max-width: none;
+		margin: 0;
+	}
+
+	.qrCard,
+	.qrCard.selectedForPrint {
+		min-height: 125mm;
+		padding: 9mm 7mm;
+		border: 0.35mm solid #bbb;
+		border-radius: 4mm;
+		opacity: 1;
+	}
+
+	.qrBrand {
+		font-size: 18pt;
+	}
+
+	.qrSubtitle {
+		font-size: 7pt;
+	}
+
+	.qrImage {
+		width: 58mm;
+		margin: 7mm auto 4mm;
+	}
+
+	.qrCard h2 {
+		font-size: 22pt;
+	}
+
+	.qrInstruction {
+		font-size: 12pt;
+	}
+
+	.qrHint {
+		font-size: 8pt;
+	}
+}

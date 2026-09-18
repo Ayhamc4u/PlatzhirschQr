@@ -6,3 +6,44 @@
 	padding-top: var(--headerHeight);
 	overflow-y: auto;
 }
+
+.businessHoursPage { padding: 30px; color: var(--text-primary); }
+.orderStatusCard,.hoursCard { border: 1px solid var(--border-subtle); border-radius: 18px; background: var(--surface-card); }
+.orderStatusCard { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; padding:26px; }
+.orderStatusCard.paused { border-color: var(--status-error); }
+.orderStatusIntro h1 { margin:0 0 8px; font-size:32px; }
+.orderStatusIntro>p:last-child,.hoursCard header p { color:var(--text-secondary); }
+.businessHoursEyebrow { margin:0 0 5px; color:var(--brand-gold); font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
+.pauseSubgrid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+.pauseSwitch { position:relative; display:grid; grid-template-columns:1fr 46px; align-items:center; gap:12px; padding:14px; border:1px solid var(--border-subtle); border-radius:14px; background:var(--surface-raised); cursor:pointer; }
+.pauseSwitch>span { display:flex; flex-direction:column; gap:3px; }
+.pauseSwitch small { color:var(--text-secondary); }
+.pauseSwitch input { position:absolute; opacity:0; }
+.pauseSwitch i { position:relative; width:46px; height:26px; border:1px solid var(--border-strong); border-radius:999px; background:var(--surface-card); }
+.pauseSwitch i:after { content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--text-muted); transition:.15s; }
+.pauseSwitch input:checked+i { border-color:var(--status-error); }
+.pauseSwitch input:checked+i:after { transform:translateX(20px); background:var(--status-error); }
+.pauseSwitch input:disabled+i { opacity:.4; }
+.pauseSwitchMain { grid-column:2; grid-row:1/span 2; }
+.hoursGrid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px; }
+.hoursCard { overflow:hidden; }
+.hoursCard header { padding:20px; border-bottom:1px solid var(--border-subtle); }
+.hoursCard header h2 { margin:0 0 8px; }
+.hoursDay { padding:15px 18px; border-bottom:1px solid var(--border-subtle); }
+.hoursDay:last-child { border-bottom:0; }
+.hoursDay.closed { background:var(--surface-raised); }
+.hoursDayHead { display:flex; justify-content:space-between; gap:10px; }
+.closedToggle { display:flex; align-items:center; gap:6px; color:var(--text-secondary); font-size:11px; }
+.timeRanges { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+.timeRange { display:grid; grid-template-columns:1fr auto 1fr 30px; align-items:center; gap:7px; }
+.timeRange input { min-width:0; height:38px; padding:0 8px; border:1px solid var(--border-subtle); border-radius:8px; background:var(--surface-raised); color:var(--text-primary); }
+.addRange,.removeRange { border:0; background:transparent; cursor:pointer; }
+.addRange { width:fit-content; color:var(--brand-gold); font-weight:800; }
+.removeRange { color:var(--status-error); font-size:20px; }
+.closedLabel { color:var(--text-muted); font-size:11px; }
+.hoursSaveBar { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-top:18px; padding:18px 20px; border:1px solid var(--border-subtle); border-radius:16px; background:var(--surface-card); }
+.hoursSaveBar p { max-width:720px; margin:0; color:var(--text-secondary); font-size:12px; line-height:1.5; }
+.hoursSaveBar button { min-height:42px; padding:0 18px; border:0; border-radius:10px; background:var(--brand-gold); color:var(--text-on-gold); font-weight:800; cursor:pointer; white-space:nowrap; }
+.hoursSaveBar button:disabled { opacity:.55; cursor:wait; }
+@media(width<=1050px){.orderStatusCard,.hoursGrid{grid-template-columns:1fr}.pauseSwitchMain{grid-column:1;grid-row:auto}}
+@media(width<=700px){.businessHoursPage{padding:18px}.pauseSubgrid{grid-template-columns:1fr}.hoursSaveBar{align-items:stretch;flex-direction:column}.hoursSaveBar button{width:100%}}

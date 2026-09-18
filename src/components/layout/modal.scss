@@ -3,20 +3,16 @@
 
 	position: absolute;
 	top: 0; left: 0;
-	width: 100%; 
+	width: 100%;
 	height: 100%;
 	display: block;
 	visibility: hidden;
 	align-items: center;
-	z-index: 5;
+	z-index: 30;
 
 	&.open {
 		visibility: visible;
-
-		.backdrop {
-			background-color: var(--colorBackdropPrimary);
-		}
-
+		.backdrop { background-color: var(--colorBackdropPrimary); }
 		.modalPane {
 			position: absolute;
 			top: 50%; right: 50%;
@@ -26,63 +22,57 @@
 		}
 	}
 
-	.backdrop {
-		position: absolute;
-		top: 0; left: 0;
-		width: 100%; 
-		height: 100%;
-		background-color: transparent;
-		transition: all 0.3s ease-out;
-	}
+	.backdrop { position: absolute; inset: 0; width: 100%; height: 100%; background-color: transparent; transition: all 0.3s ease-out; }
 
 	.modalPane {
 		position: absolute;
 		top: 63px; right: 51px;
 		opacity: 0;
 		display: flex;
-		width: 500px;
+		width: min(500px, calc(100vw - 40px));
+		max-height: calc(100dvh - 40px);
+		box-sizing: border-box;
 		padding: 36px;
 		transform: scale(0) translate(50%, -50%);
 		transform-origin: top right;
 		border-radius: 25px;
-		overflow: hidden;
+		overflow-y: auto;
+		overflow-x: hidden;
 		box-shadow: 0 0 100px rgb(0 0 0 / 30%);
 		background-color: var(--colorBackgroundPrimary);
 		transition: all var(--modalDuration) ease-out, top var(--modalDuration) ease-in;
 
-		.closeModal {
-			position: absolute;
-			top: 24px; right: 24px;
-			cursor: pointer;
-		}
+		.closeModal { position: absolute; top: 18px; right: 18px; cursor: pointer; z-index: 3; }
 	}
 }
 
 @media (width <= 650px) {
 	.modal {
-		&.open {
-			visibility: visible;
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		height: 100dvh;
+		z-index: 100;
 
-			.modalPane {
-				width: 100%;
-				top: unset; bottom: 0; right: 0;
-				transform: translateY(0);
-				transition: all var(--modalDuration) ease-out;
-			}
+		&.open .modalPane {
+			width: 100%;
+			top: auto; bottom: 0; right: 0;
+			transform: translateY(0);
+			transition: all var(--modalDuration) ease-out;
 		}
 
 		.modalPane {
-			top: unset; bottom: 0; right: 0;
+			top: auto; bottom: 0; right: 0;
 			width: 100%;
+			max-height: min(86dvh, 620px);
+			padding: 28px 20px calc(22px + env(safe-area-inset-bottom));
 			opacity: 1;
 			transform: translateY(100%);
-			border-radius: 35px 35px 0 0;
+			border-radius: 28px 28px 0 0;
+			overflow-y: auto;
 			transition: all var(--modalDuration) ease-out;
 
-			.closeModal {
-				width: 60px;
-				height: 60px;
-			}
+			.closeModal { width: 48px; height: 48px; top: 12px; right: 12px; }
 		}
 	}
 }

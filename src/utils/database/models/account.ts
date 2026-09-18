@@ -15,6 +15,10 @@ const AccountSchema = new mongoose.Schema<TAccount>(
 		verified: { type: Boolean, default: false },
 		accountActive: { type: Boolean, default: true },
 		subscriptionActive: { type: Boolean, default: true },
+		failedLoginAttempts: { type: Number, default: 0 },
+		lastFailedLoginAt: { type: Date },
+		loginLockedUntil: { type: Date },
+		loginLockLevel: { type: Number, default: 0 },
 		profile: { type: mongoose.Schema.Types.ObjectId, ref: "profiles", unique: true },
 		kitchens: [{ type: mongoose.Schema.Types.ObjectId, ref: "kitchens", unique: true }],
 		tables: [{ type: mongoose.Schema.Types.ObjectId, ref: "tables", unique: true }],
@@ -35,6 +39,10 @@ export type TAccount = HydratedDocument<{
 	verified: boolean;
 	accountActive: boolean;
 	subscriptionActive: boolean;
+	failedLoginAttempts: number;
+	lastFailedLoginAt?: Date;
+	loginLockedUntil?: Date;
+	loginLockLevel: number;
 	profile: TProfile;
 	kitchens: Array<TKitchen>;
 	tables: Array<TTable>;

@@ -5,14 +5,14 @@ import { createContext, type ReactNode, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 
-import type { TMenu } from "#utils/database/models/menu";
-import type { TOrder } from "#utils/database/models/order";
+import type { TMenu, TOrderType } from "#utils/database/models/menu";
+import type { TOrder, TSelectedVariation } from "#utils/database/models/order";
 import { fetcher } from "#utils/helper/common";
 
 const OrderDefault: TOrderInitialType = {
 	order: undefined,
 	loading: false,
-	placeOrder: () => new Promise(noop),
+	placeOrder: () => Promise.resolve(false),
 	placingOrder: false,
 	cancelOrder: noop,
 	cancelingOrder: false,
@@ -30,19 +30,30 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	const [cancelingOrder, setCancelingOrder] = useState(false);
 	const [loginOpen, setLoginOpen] = useState(false);
 
-	const placeOrder = async (products: Array<TMenuCustom>) => {
+	const placeOrder = async (products: Array<TMenuCustom>, context?: TPlaceOrderContext) => {
 		setPlacingOrder(true);
-		const req = await fetch("/api/order/place", {
-			method: "POST",
-			body: JSON.stringify({
-				products: products.map((product) => pick(product, ["_id", "quantity"])),
-			}),
-		});
-		const res = await req.json();
+		try {
+			const req = await fetch("/api/order/place", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					products: products.map((product) => pick(product, ["_id", "quantity", "comment", "selectedVariations"])),
+					orderType: context?.orderType,
+					table: context?.table,
+					requestedPickupAt: context?.requestedPickupAt,
+				}),
+			});
+			const res = await req.json();
 
-		if (!req.ok) toast.error(res?.message);
-		await mutate();
-		setPlacingOrder(false);
+			if (!req.ok) {
+				toast.error(res?.message);
+				return false;
+			}
+			await mutate();
+			return true;
+		} finally {
+			setPlacingOrder(false);
+		}
 	};
 	const cancelOrder = async () => {
 		setCancelingOrder(true);
@@ -69,14 +80,24 @@ export type TOrderProviderProps = {
 	children?: ReactNode;
 };
 
+type TPlaceOrderContext = {
+	orderType: Extract<TOrderType, "DINE_IN" | "PICKUP">;
+	table?: string | null;
+	requestedPickupAt?: string;
+};
+
 export type TOrderInitialType = {
 	order?: TOrder;
 	loading: boolean;
-	placeOrder: (products: Array<TMenuCustom>) => Promise<void>;
+	placeOrder: (products: Array<TMenuCustom>, context?: TPlaceOrderContext) => Promise<boolean>;
 	placingOrder: boolean;
 	cancelOrder: () => void;
 	cancelingOrder: boolean;
 	loginOpen: boolean;
 	setLoginOpen: (open: boolean) => void;
 };
-type TMenuCustom = TMenu & { quantity: number };
+type TMenuCustom = TMenu & {
+	quantity: number;
+	comment?: string;
+	selectedVariations?: TSelectedVariation[];
+};

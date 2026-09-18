@@ -1,0 +1,168 @@
+.customerAccountPage {
+	min-height: 100dvh;
+	padding: 32px clamp(18px, 5vw, 64px) 64px;
+	background: #11100e;
+	color: #f4f0e8;
+
+	.accountHeader {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 24px;
+		max-width: 980px;
+		margin: 0 auto 24px;
+
+		span { color: #d9a441; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+		h1 { margin: 4px 0 2px; font-size: clamp(30px, 5vw, 48px); }
+		p { margin: 0; color: rgb(244 240 232 / 68%); }
+		a { padding: 12px 16px; border-radius: 10px; background: #d9a441; color: #11100e; font-weight: 800; text-decoration: none; white-space: nowrap; }
+	}
+
+	.accountProfileCard,
+	.orderHistory { max-width: 980px; margin-inline: auto; }
+
+	.accountProfileCard {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin-bottom: 28px;
+		padding: 18px;
+		border: 1px solid rgb(217 164 65 / 22%);
+		border-radius: 16px;
+		background: #1b1a17;
+	}
+
+	.profileCardHeading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		> div { display: flex; flex-direction: column; gap: 3px; }
+		small { color: #d9a441; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+		strong { font-size: 20px; }
+	}
+
+	.profileEditButton,
+	.profileSaveButton,
+	.profileCancelButton,
+	.logoutButton {
+		min-height: 40px;
+		padding: 0 14px;
+		border-radius: 9px;
+		font: inherit;
+		font-weight: 800;
+		cursor: pointer;
+	}
+
+	.profileEditButton,
+	.profileSaveButton { border: 1px solid #d9a441; background: #d9a441; color: #11100e; }
+	.profileCancelButton { border: 1px solid rgb(244 240 232 / 18%); background: transparent; color: #f4f0e8; }
+	.logoutButton { border: 1px solid rgb(244 240 232 / 18%); background: #24231f; color: #f4f0e8; }
+	.profileSaveButton:disabled,
+	.profileCancelButton:disabled { opacity: .55; cursor: wait; }
+
+	.profileOverviewGrid,
+	.profileFormGrid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.profileOverviewGrid > div {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 0;
+		padding: 12px;
+		border-radius: 11px;
+		background: #24231f;
+		small { color: rgb(244 240 232 / 55%); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+		strong { overflow: hidden; text-overflow: ellipsis; font-size: 14px; }
+	}
+
+	.profileFormGrid label {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		span { color: rgb(244 240 232 / 62%); font-size: 12px; font-weight: 700; }
+		input {
+			width: 100%;
+			height: 42px;
+			box-sizing: border-box;
+			padding: 0 12px;
+			border: 1px solid rgb(244 240 232 / 16%);
+			border-radius: 9px;
+			background: #11100e;
+			color: #f4f0e8;
+			font: inherit;
+			outline: none;
+		}
+		input:focus { border-color: #d9a441; }
+	}
+
+	.passwordManagerUsername {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.newsletterSetting {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: flex-start;
+		gap: 10px;
+		padding: 14px;
+		border: 1px solid rgb(217 164 65 / 18%);
+		border-radius: 12px;
+		background: rgb(217 164 65 / 6%);
+		cursor: pointer;
+		input { width: 19px; height: 19px; margin: 2px 0 0; accent-color: #d9a441; }
+		span { display: flex; flex-direction: column; gap: 3px; }
+		strong { color: #f4f0e8; }
+		small { color: rgb(244 240 232 / 62%); line-height: 1.4; }
+	}
+
+	.profileActions,
+	.accountSessionActions { display: flex; gap: 10px; flex-wrap: wrap; }
+	.accountSessionActions { padding-top: 2px; }
+
+	.sectionHeading {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 12px;
+		h2 { margin: 0; font-size: 24px; }
+		span { display: grid; place-items: center; min-width: 28px; height: 28px; border-radius: 999px; background: #d9a441; color: #11100e; font-weight: 800; }
+	}
+
+	.historyList { display: flex; flex-direction: column; gap: 10px; }
+	.historyCard { padding: 16px; border: 1px solid rgb(244 240 232 / 10%); border-radius: 14px; background: #1b1a17; }
+	.historyTopline { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+	.historyTopline > div { display: flex; flex-direction: column; gap: 3px; }
+	.historyTopline span { color: rgb(244 240 232 / 56%); font-size: 12px; }
+	.historyPrice { text-align: right; }
+	.historyPrice strong { color: #d9a441; font-size: 18px; }
+	.historyProducts { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgb(244 240 232 / 8%); }
+	.historyProducts span { font-size: 13px; color: rgb(244 240 232 / 78%); }
+	.emptyHistory { padding: 28px; border-radius: 14px; background: #1b1a17; text-align: center; }
+	.emptyHistory p { margin-bottom: 0; color: rgb(244 240 232 / 60%); }
+}
+
+@media (width <= 650px) {
+	.customerAccountPage {
+		padding-top: 22px;
+		.accountHeader { align-items: stretch; flex-direction: column; }
+		.accountHeader a { text-align: center; }
+		.profileOverviewGrid,
+		.profileFormGrid { grid-template-columns: 1fr; }
+		.profileActions { flex-direction: column; }
+		.profileActions button { width: 100%; }
+		.historyTopline { gap: 12px; }
+	}
+}

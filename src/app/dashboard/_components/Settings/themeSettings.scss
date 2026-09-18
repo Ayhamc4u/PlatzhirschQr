@@ -1,73 +1,196 @@
 .themeSettings {
 	width: 100%;
-	border-radius: 20px;
-	margin-top: 30px;
-	padding: 20px 30px;
-	background: var(--colorBackgroundPrimary);
-	box-shadow: 0 10px 10px -10px rgb(0 0 0 / 10%);
+	padding: 30px;
+	color: var(--text-primary);
 
-	.colorHeader {
+	.designIntro {
 		display: flex;
-		min-height: 50px;
+		align-items: flex-start;
 		justify-content: space-between;
-		align-items: center;
+		gap: 24px;
+		padding: 28px;
+		border: 1px solid var(--border-subtle);
+		border-radius: 18px;
+		background: var(--surface-card);
+		box-shadow: 0 10px 24px rgb(0 0 0 / 8%);
+	}
 
-		.heading {
-			color: var(--colorContentPrimary);
-			font-size: 30px;
-			font-variation-settings: 'wdth' 75, 'wght' 500;
-			margin: 0;
-			overflow: hidden;
-			user-select: none;
-			white-space: nowrap;
-			transition: all 0.2s ease-out;
+	.eyebrow {
+		margin: 0 0 6px;
+		color: var(--brand-gold);
+		font-size: 12px;
+		font-weight: 800;
+		letter-spacing: .12em;
+		text-transform: uppercase;
+	}
 
-			span {
-				font-variation-settings: 'wdth' 75, 'wght' 300;
-			}
+	h1,
+	h2,
+	p {
+		margin-top: 0;
+	}
+
+	h1 {
+		margin-bottom: 10px;
+		font-size: 34px;
+	}
+
+	.description {
+		max-width: 640px;
+		margin-bottom: 0;
+		color: var(--text-secondary);
+		line-height: 1.5;
+	}
+
+	.modeSwitch {
+		display: inline-flex;
+		gap: 6px;
+		padding: 5px;
+		border: 1px solid var(--border-subtle);
+		border-radius: 12px;
+		background: var(--surface-raised);
+
+		button {
+			min-width: 90px;
+			padding: 10px 14px;
+			border: 0;
+			border-radius: 8px;
+			background: transparent;
+			color: var(--text-secondary);
+			font-weight: 800;
+			cursor: pointer;
 		}
 
-		.action {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			gap: 8px;
-
-			.clear {
-				transform: scale(0.8);
-			}
+		button.active {
+			background: var(--brand-gold);
+			color: var(--text-on-gold);
 		}
 	}
 
-	.colorPickerWrapper {
+	.brandColors {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px;
+		margin-top: 18px;
+	}
+
+	.brandColor,
+	.paletteCard {
+		border: 1px solid var(--border-subtle);
+		border-radius: 16px;
+		background: var(--surface-card);
+	}
+
+	.brandColor {
 		display: flex;
-		flex-direction: column;
-		margin: 36px 0 24px;
+		align-items: center;
+		gap: 14px;
+		padding: 16px;
 
-		.spinner {
-			margin: 64px 0;
-		}
-
-		.colorPopper {
-			margin-bottom: 32px;
+		div {
+			display: flex;
+			flex-direction: column;
+			gap: 3px;
 		}
 	}
-}
 
-@media (width <= 460px) {
-	.themeSettings {
-		.colorHeader .heading {
+	.swatch {
+		width: 38px;
+		height: 38px;
+		flex: 0 0 38px;
+		border: 1px solid color-mix(in srgb, var(--border-strong) 75%, transparent);
+		border-radius: 10px;
+		box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%);
+	}
+
+	code {
+		color: var(--text-muted);
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 12px;
+	}
+
+	.paletteGrid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px;
+		margin-top: 18px;
+		padding-bottom: 30px;
+	}
+
+	.paletteCard {
+		padding: 22px;
+
+		h2 {
+			margin-bottom: 18px;
 			font-size: 24px;
 		}
 	}
+
+	.paletteList {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.paletteRow {
+		display: grid;
+		grid-template-columns: 32px minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 10px;
+		min-height: 42px;
+		padding: 6px 0;
+		border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 70%, transparent);
+
+		&:last-child {
+			border-bottom: 0;
+		}
+
+		.swatch {
+			width: 30px;
+			height: 30px;
+			flex-basis: 30px;
+			border-radius: 8px;
+		}
+
+		.label {
+			color: var(--text-secondary);
+			font-size: 14px;
+		}
+	}
 }
 
-@media (width <= 420px) {
+@media (width <= 900px) {
 	.themeSettings {
-		padding: 20px 25px;
+		.designIntro {
+			flex-direction: column;
+		}
 
-		.colorHeader .heading {
-			font-size: 5vw;
+		.brandColors,
+		.paletteGrid {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+@media (width <= 600px) {
+	.themeSettings {
+		padding: 18px;
+
+		.designIntro,
+		.paletteCard {
+			padding: 20px;
+		}
+
+		.modeSwitch {
+			width: 100%;
+
+			button {
+				flex: 1;
+			}
+		}
+
+		.brandColors {
+			grid-template-columns: 1fr;
 		}
 	}
 }

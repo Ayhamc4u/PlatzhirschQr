@@ -5,6 +5,12 @@ import { Accounts, type TAccount } from "./account";
 
 const accountCache = new Map<string, TAccount | null>();
 
+export type TTimeRange = { from: string; to: string };
+export type TDaySchedule = { closed: boolean; ranges: TTimeRange[] };
+export type TWeeklySchedule = Record<string, TDaySchedule>;
+export type TOrderPause = { all: boolean; pickup: boolean; dineIn: boolean };
+export type TCategoryAvailability = Record<string, TWeeklySchedule>;
+
 const ProfileSchema = new mongoose.Schema<TProfile>(
 	{
 		name: { type: String, trim: true, required: true },
@@ -21,6 +27,17 @@ const ProfileSchema = new mongoose.Schema<TProfile>(
 		avatar: { type: String, trim: true },
 		cover: { type: String, trim: true },
 		photos: [{ type: String, trim: true }],
+		orderPause: {
+			all: { type: Boolean, default: false },
+			pickup: { type: Boolean, default: false },
+			dineIn: { type: Boolean, default: false },
+		},
+		openingHours: { type: mongoose.Schema.Types.Mixed, default: {} },
+		serviceHours: { type: mongoose.Schema.Types.Mixed, default: {} },
+		categoryAvailability: { type: mongoose.Schema.Types.Mixed, default: {} },
+		pickupPreparationMinutes: { type: Number, min: 0, max: 240, default: 20 },
+		pickupSlotMinutes: { type: Number, min: 5, max: 60, default: 15 },
+		pickupAdvanceDays: { type: Number, min: 1, max: 30, default: 7 },
 	},
 	{ timestamps: true },
 );
@@ -51,4 +68,11 @@ export type TProfile = HydratedDocument<{
 	themeColor: TThemeColor;
 	gstInclusive: boolean;
 	categories: Array<string>;
+	orderPause?: TOrderPause;
+	openingHours?: TWeeklySchedule;
+	serviceHours?: TWeeklySchedule;
+	categoryAvailability?: TCategoryAvailability;
+	pickupPreparationMinutes?: number;
+	pickupSlotMinutes?: number;
+	pickupAdvanceDays?: number;
 }>;

@@ -1,151 +1,104 @@
 .userLogin {
-	--userLoginDuration: 0.3s;
-	--footerHeight: 60px;
-	--headerHeight: calc(var(--footerHeight) + 2px);
-
 	position: relative;
 	width: 100%;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
-	
+	gap: 16px;
+	box-sizing: border-box;
+
 	.header {
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-end;
-		transition: all var(--userLoginDuration) ease-out;
+		gap: 6px;
 
 		.heading {
-			bottom: 0;
 			font-variation-settings: 'wdth' 75, 'wght' 300;
-			font-size: 25px;
+			font-size: 23px;
 			color: var(--colorContentPrimary);
 			user-select: none;
-
-			span {
-				font-variation-settings: 'wdth' 75, 'wght' 500;
-			}
+			span { font-variation-settings: 'wdth' 75, 'wght' 600; }
 		}
+
+		p { margin: 0; max-width: 460px; font-size: 12px; line-height: 1.4; color: var(--colorContentSecondary); }
 	}
 
-	.content {
-		position: relative;
+	.content { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+	.nameRow,
+	.phoneEntry { display: grid; gap: 10px; align-items: end; min-width: 0; }
+	.nameRow { grid-template-columns: repeat(2, 176px); }
+	.phoneEntry { grid-template-columns: 176px 244px; }
+	.accountEmailRow { width: 354px; max-width: 100%; }
+
+	/* xtreme-ui Textfield has its own fixed sizing. Override wrapper and input. */
+	.nameRow > *,
+	.phoneInput > *,
+	.accountEmailRow > * { min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; }
+	.nameRow .textInput,
+	.nameRow .input,
+	.phoneInput .textInput,
+	.phoneInput .input,
+	.accountEmailRow .textInput,
+	.accountEmailRow .input { width: 100% !important; height: 40px !important; min-width: 0 !important; max-width: 100% !important; }
+	.nameRow input,
+	.phoneInput input,
+	.accountEmailRow input { display: block; width: 100% !important; min-width: 0 !important; max-width: 100% !important; height: 40px !important; box-sizing: border-box !important; }
+
+	.countrySelect {
+		display: flex; flex-direction: column; gap: 6px; min-width: 0;
+		font-size: 11px; font-weight: 600; color: var(--colorContentSecondary, var(--colorContentPrimary));
+		select { width: 100%; height: 40px; box-sizing: border-box; padding: 0 10px; border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: 9px; background: var(--colorBackgroundPrimary); color: var(--colorContentPrimary); font: inherit; font-size: 13px; outline: none; }
+		select:focus-visible { border-color: currentColor; }
+	}
+
+	.phoneInput {
+		position: relative; display: flex; align-items: flex-end; min-width: 0;
+		.dialCode { position: absolute; left: 11px; bottom: 12px; z-index: 2; font-size: 13px; font-weight: 700; pointer-events: none; }
+		input { padding-left: 52px !important; }
+	}
+
+	.customerOptions {
 		display: flex;
-		height: 100px;
 		flex-direction: column;
-		flex-grow: 1;
-		justify-content: center;
-		align-items: center;
-		transition: all var(--userLoginDuration) ease-out;
+		gap: 7px;
+		width: 420px;
+		max-width: 100%;
+		margin-top: 2px;
 
-		> .phone, .name {
-			position: absolute;
-			width: 100%;
-			opacity: 1;
-			transition: all var(--userLoginDuration) ease-out;
+		label {
+			display: grid;
+			grid-template-columns: 20px minmax(0, 1fr);
+			gap: 9px;
+			align-items: start;
+			padding: 8px 10px;
+			border: 1px solid color-mix(in srgb, var(--colorContentPrimary) 10%, transparent);
+			border-radius: 10px;
+			cursor: pointer;
 		}
 
-		.otpContainer {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			opacity: 0;
-			display: flex;
-			align-items: center;
-			transform: translateX(100%);
-			transition: all var(--userLoginDuration) ease-out;
-			gap: 16px;
-
-			> .textInput {
-				width: 100%;
-				height: 45px;
-
-				&.otp {
-					margin-top: 30px;
-					height: auto;
-				}
-			}
-		}
+		input { width: 17px; height: 17px; margin: 1px 0 0; accent-color: #d9a441; }
+		span { display: flex; flex-direction: column; gap: 2px; }
+		strong { font-size: 12px; color: var(--colorContentPrimary); }
+		small { font-size: 10px; line-height: 1.35; color: var(--colorContentSecondary); }
 	}
 
 	.footer {
-		transition: all var(--userLoginDuration) ease-out;
-		display: flex;
-		justify-content: flex-end;
-
-		> .button {
-			--buttonWidth: 100px;
-			--buttonHeight: 35px;
-		}
-	}
-
-	&.loginOTP, &.signOTP {
-		.content {
-			height: 100px;
-
-			> .phone {
-				opacity: 0;
-				transform: translateX(-100%);
-			}
-
-			.otpContainer {
-				opacity: 1;
-				transform: translateX(0);
-			}
-		}
-
-		.footer > .button {
-			--buttonWidth: 120px;
-		}
-	}
-
-	&.loginOTP {
-		.content {
-			height: 150px;
-
-			.otpContainer {
-				> .textInput {
-					&.name {
-						display: none;
-					}
-
-					&.otp {
-						margin-top: 0;
-					}
-				}
-			}
-		}
+		display: flex; justify-content: flex-start; flex: 0 0 auto;
+		> .button { --buttonWidth: 150px; --buttonHeight: 40px; font-weight: 800; }
 	}
 }
 
-@media (height <= 535px) {
+@media (width <= 620px) {
 	.userLogin {
-		&.openCodeSelector {
-			.header {
-				opacity: 0;
-				margin-top: calc(var(--headerHeight) * -1);
-			}
-		}
-	}
-}
+		gap: 14px;
+		max-height: calc(100dvh - 120px);
+		overflow-y: auto;
+		padding-bottom: max(10px, env(safe-area-inset-bottom));
 
-@media (height <= 470px) {
-	.userLogin {
-		&.openCodeSelector {
-			.content {
-				height: 250px;
-			}
-		}
-	}
-}
-
-@media (height <= 420px) {
-	.userLogin {
-		&.openCodeSelector {
-			.footer {
-				opacity: 0;
-				margin-bottom: calc(var(--footerHeight) * -1);
-			}
-		}
+		.nameRow,
+		.phoneEntry { grid-template-columns: 1fr; width: min(100%, 360px); }
+		.nameRow > *, .phoneInput, .countrySelect, .accountEmailRow, .customerOptions { width: 100%; max-width: 360px; }
+		.footer { position: relative; z-index: 2; padding-bottom: 4px; }
+		.footer > .button { --buttonWidth: min(100%, 360px); }
 	}
 }

@@ -3,17 +3,19 @@ import { useInView } from "react-intersection-observer";
 
 import QuantityButton from "#components/base/QuantityButton";
 import type { TMenu } from "#utils/database/models/menu";
+import type { TSelectedVariation } from "#utils/database/models/order";
+import { formatEuro } from "#utils/helper/currency";
 
 import "./itemCard.scss";
 
 const ItemCard = (props: TItemCardProps) => {
 	const { className, item, staticCard, increaseQuantity, decreaseQuantity } = props;
 	const [cardRef, inView] = useInView({ triggerOnce: true, threshold: 0 });
-	const getTotalPrice = () => {
-		return item.quantity ? item.price * item.quantity : item.price;
-	};
-
-	const classList = clsx("itemCard", className, staticCard && "staticCard");
+	const extrasPrice = (item.selectedVariations ?? []).reduce((sum, variation) => sum + variation.price, 0);
+	const unitPrice = staticCard ? item.price : item.price + extrasPrice;
+	const totalPrice = item.quantity ? unitPrice * item.quantity : unitPrice;
+	const hasMeta = !!item.selectedVariations?.length || !!item.comment;
+	const classList = clsx("itemCard", className, staticCard && "staticCard", hasMeta && "hasMeta");
 
 	return (
 		<div className={classList} ref={cardRef}>
@@ -26,17 +28,15 @@ const ItemCard = (props: TItemCardProps) => {
 					)}
 					<div className="options">
 						<p className="title">{item.name}</p>
+						{!!item.selectedVariations?.length && <p className="itemMeta">Extras: {item.selectedVariations.map((variation) => variation.name).join(", ")}</p>}
+						{item.comment && <p className="itemMeta">Hinweis: {item.comment}</p>}
 						<div className="footer">
 							<div className="price">
-								{!staticCard && <p className="rupee">{getTotalPrice()}</p>}
-								{staticCard && (
-									<p className="rupee">
-										{item.price} <span>✕</span> {item.quantity}
-									</p>
-								)}
+								{!staticCard && <p>{formatEuro(totalPrice)}</p>}
+								{staticCard && <p>{formatEuro(item.price)} <span>✕</span> {item.quantity}</p>}
 							</div>
 							{staticCard ? (
-								<div className="totalAmount rupee">{getTotalPrice()}</div>
+								<div className="totalAmount">{formatEuro(totalPrice)}</div>
 							) : (
 								<QuantityButton
 									className="addToCart"
@@ -63,4 +63,8 @@ type TItemCardProps = {
 	decreaseQuantity?: (item: TMenuCustom) => void;
 };
 
-type TMenuCustom = TMenu & { quantity: number };
+type TMenuCustom = TMenu & {
+	quantity: number;
+	comment?: string;
+	selectedVariations?: TSelectedVariation[];
+};

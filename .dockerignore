@@ -2,10 +2,12 @@ node_modules
 .next
 .git
 .gitignore
+.github
 .env*
-!.env.test
 npm-debug.log*
 pnpm-debug.log*
 coverage
 .agent
 .vscode
+docs
+*.md

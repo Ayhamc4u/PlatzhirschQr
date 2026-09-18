@@ -12,6 +12,11 @@
 	border: 1px solid var(--colorContentTertiary);
 	margin-bottom: calc(var(--itemSize) / 10);
 
+	&.hasMeta {
+		height: auto;
+		min-height: calc(var(--itemSize) + 42px);
+	}
+
 	.picture {
 		position: relative;
 		width: var(--itemSize);
@@ -50,6 +55,13 @@
 			font-size: 13px;
 			font-variation-settings: 'wdth' 75, 'wght' 500;
 			overflow: hidden;
+		}
+
+		.itemMeta {
+			margin: 4px 10px 0;
+			font-size: 11px;
+			line-height: 1.35;
+			color: var(--colorContentSecondary);
 		}
 
 		.footer {
@@ -94,6 +106,10 @@
 			}
 		}
 	}
+
+	&.hasMeta .options {
+		padding-bottom: 34px;
+	}
 	
 	&.staticCard {
 		--itemSize: 70px;
@@ -111,13 +127,8 @@
 		}
 
 		.options {
-			.title {
-				font-size: 11px;
-			}
-
-			.footer {
-				font-size: 11px;
-			}
+			.title { font-size: 11px; }
+			.footer { font-size: 11px; }
 		}
 	}
 }
@@ -132,12 +143,7 @@
 		padding: 15px 10px;
 		border-width: 0 0 1px;
 
-		&:first-child {
-			border-width: 1px 0;
-		}
-
-		.picture {
-			transform: scale(0.9);
-		}
+		&:first-child { border-width: 1px 0; }
+		.picture { transform: scale(0.9); }
 	}
 }

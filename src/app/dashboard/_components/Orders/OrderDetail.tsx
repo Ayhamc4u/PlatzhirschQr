@@ -6,6 +6,7 @@ import Collapsible from "#components/layout/Collapsible";
 import NoContent from "#components/layout/NoContent";
 import type { TMenu } from "#utils/database/models/menu";
 import type { TOrder } from "#utils/database/models/order";
+import { formatEuro } from "#utils/helper/currency";
 
 import ItemCard from "../../../../components/layout/ItemCard";
 
@@ -89,19 +90,14 @@ const OrderDetail = (props: TOrderDetailProps) => {
 				<div className="info">
 					<h1 className="table">{!reject ? `Table: ${data?.table}` : "Are you sure?"}</h1>
 					<div className="name">
-						<Icon code="f007" type="solid" size={16} />
+						<Icon code="f007" type="solid" style={{ fontSize: 16 }} />
 						{data?.customer?.fname} {data?.customer?.lname}
 					</div>
 					<div className="phone">
-						<Icon code="f095" type="solid" size={16} />
+						<Icon code="f095" type="solid" style={{ fontSize: 16 }} />
 						{data?.customer?.phone}
 					</div>
-					{data?.orderTotal && (
-						<div className="total">
-							<Icon code="e1bc" type="solid" size={16} />
-							{data?.orderTotal}
-						</div>
-					)}
+					{data?.orderTotal && <div className="total">{formatEuro(data.orderTotal)}</div>}
 				</div>
 				<OptionButtons />
 			</div>

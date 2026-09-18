@@ -93,17 +93,30 @@
 
 @media (width <= 750px) {
 	.sideSheet {
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		height: 100dvh;
+		z-index: 100;
+
 		> .backdrop {
-			height: calc(100% - 70px);
+			inset: 0;
+			width: 100vw;
+			height: 100dvh;
 		}
 
 		> .sideContainer {
 			--sideSheetWidth: 100% !important;
 
+			position: fixed;
+			inset: 0;
+			width: 100vw;
+			height: 100dvh;
+
 			.sheetHeader {
 				height: 90px;
-				padding-top: 48px;
-				padding-bottom: 24px;
+				padding-top: calc(20px + env(safe-area-inset-top));
+				padding-bottom: 18px;
 			}
 		}
 	}

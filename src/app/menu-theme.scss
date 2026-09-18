@@ -1,0 +1,106 @@
+.orderPage {
+	.mainContainer {
+		background-color: var(--surface-page);
+		background-image: var(--menu-background-image);
+		background-size: auto, 720px 720px;
+		background-position: center top;
+		background-attachment: local;
+		color: var(--text-primary);
+	}
+
+	.mainContainer .mainHeader {
+		background: color-mix(in srgb, var(--menu-header) 96%, transparent);
+		border-bottom-color: color-mix(in srgb, var(--brand-gold) 32%, transparent);
+		color: var(--text-primary);
+	}
+
+	.mainContainer .mainHeader .homeButton {
+		background: transparent;
+		border-color: var(--border-subtle);
+		color: var(--text-primary);
+	}
+
+	.mainContainer .mainHeader .homeButton:hover {
+		border-color: var(--brand-gold);
+		color: var(--brand-gold);
+	}
+
+	.mainContainer .mainHeader .options .search {
+		background: var(--surface-raised);
+		border-color: var(--border-subtle);
+		box-shadow: 0 8px 22px rgb(0 0 0 / 14%);
+	}
+
+	.mainContainer .mainHeader .options .search input { color: var(--text-primary); }
+	.mainContainer .mainHeader .options .search input::placeholder { color: var(--text-muted); }
+	.mainContainer .mainHeader .options .search:focus-within {
+		background: var(--surface-card);
+		border-color: var(--brand-gold);
+	}
+
+	.mainContainer .category .menuCategory {
+		background: var(--menu-card);
+		border-color: var(--border-subtle);
+		color: var(--text-primary);
+	}
+
+	.mainContainer .category .menuCategory .title { color: var(--text-primary); }
+	.mainContainer .category .menuCategory:hover { border-color: var(--brand-gold); }
+	.mainContainer .category .menuCategory.active {
+		background: var(--brand-gold) !important;
+		border-color: var(--brand-gold) !important;
+		color: var(--text-on-gold) !important;
+	}
+	.mainContainer .category .menuCategory.active .title { color: var(--text-on-gold) !important; }
+
+	.mainContainer .order > .header h1 {
+		color: var(--text-primary);
+		letter-spacing: 0.015em;
+	}
+
+	.mainContainer .menuEmptyState {
+		background: var(--menu-card);
+		border-color: color-mix(in srgb, var(--brand-gold) 35%, var(--border-subtle));
+		color: var(--text-primary);
+	}
+
+	.menuCard {
+		background: var(--menu-card);
+		border-color: var(--border-subtle);
+		box-shadow: 0 12px 30px rgb(0 0 0 / 18%);
+	}
+
+	.menuCard .picture { background: var(--menu-card-muted); }
+
+	.menuCard .copy h2,
+	.menuCard .menuPrice,
+	.menuCard .variationInfo summary { color: var(--text-primary); }
+
+	.menuCard .copy p { color: var(--text-secondary); }
+
+	.menuCard .variationPreview {
+		background: var(--menu-card-muted);
+		border: 1px solid var(--border-subtle);
+		color: var(--text-secondary);
+	}
+
+	.menuCard .quantityButton .hiddenContainer .value p { color: var(--text-primary); }
+	.menuCard .quantityButton .quantity {
+		border-color: var(--brand-gold);
+		color: var(--brand-gold);
+	}
+	.menuCard .quantityButton.filled .quantity {
+		background: var(--brand-gold);
+		color: var(--text-on-gold);
+	}
+
+	.mainContainer .menuFooter {
+		background: var(--menu-header);
+		border-top-color: color-mix(in srgb, var(--brand-gold) 26%, var(--border-subtle));
+		color: var(--text-secondary);
+	}
+	.mainContainer .menuFooter strong,
+	.mainContainer .menuFooter a:hover { color: var(--brand-gold); }
+	.mainContainer .menuFooter span,
+	.mainContainer .menuFooter a { color: var(--text-secondary); }
+}

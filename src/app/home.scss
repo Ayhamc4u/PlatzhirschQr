@@ -1,38 +1,254 @@
 .homepage {
-	--navHeight: 80px;
-
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-	
-	.homepageSections {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		background-color: var(--colorBackgroundPrimary);
-		animation: fadeIn 0.5s linear forwards;
-
-		> .scrollbarVertical {
-			transform: translateX(-10px);
-		}
-
-		.landingSection {
-			position: relative;
-			display: flex;
-			width: 100dvw;
-			height: 100dvh;
-		}
-	}
+	min-height: 100dvh;
+	background: var(--surface-page);
+	color: var(--text-primary);
 }
 
-@media (width <= 600px) {
-	.homepage {
-		.homepageSections {
-			&.menuOpen {
-				filter: blur(50px);
-				transition: filter 0.2s ease-in;
-			}
-		}
+.platzhirschHome {
+	min-height: 100dvh;
+	display: grid;
+	place-items: center;
+	gap: 42px;
+	padding: 72px 24px 48px;
+	background:
+		radial-gradient(circle at 50% 0%, rgb(217 164 65 / 10%), transparent 38%),
+		linear-gradient(180deg, color-mix(in srgb, var(--surface-raised) 70%, var(--surface-page)) 0%, var(--surface-page) 55%);
+	color: var(--text-primary);
+}
+
+.homeAccountBar {
+	position: fixed;
+	top: 16px;
+	right: 18px;
+	z-index: 40;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 7px 8px 7px 12px;
+	border: 1px solid color-mix(in srgb, var(--brand-gold) 35%, var(--border-subtle));
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--surface-card) 92%, transparent);
+	box-shadow: 0 8px 28px rgb(0 0 0 / 16%);
+	backdrop-filter: blur(10px);
+}
+
+.homeAccountBar span {
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--text-secondary);
+}
+
+.homeAccountBar a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 34px;
+	padding: 0 14px;
+	border-radius: 999px;
+	background: var(--brand-gold);
+	color: var(--text-on-gold);
+	font-family: var(--font-heading);
+	font-size: 14px;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.homeAccountBar .themeSwitcher {
+	background: var(--surface-raised);
+}
+
+.platzhirschHero {
+	width: min(820px, 100%);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.platzhirschEyebrow {
+	font-family: var(--font-heading);
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--brand-gold);
+}
+
+.platzhirschHero h1 {
+	margin: 0;
+	font-family: var(--font-heading);
+	font-size: clamp(58px, 10vw, 108px);
+	font-weight: 650;
+	line-height: 0.92;
+	letter-spacing: -0.025em;
+	text-transform: uppercase;
+	color: var(--text-primary);
+}
+
+.platzhirschHero .heroIntro {
+	margin: 0;
+	max-width: 600px;
+	font-size: clamp(18px, 2.2vw, 22px);
+	line-height: 1.5;
+	color: var(--text-secondary);
+}
+
+.pickupStatus {
+	width: min(720px, 100%);
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1px;
+	margin-top: 10px;
+	border: 1px solid color-mix(in srgb, var(--brand-gold) 35%, var(--border-subtle));
+	border-radius: 10px;
+	overflow: hidden;
+	background: color-mix(in srgb, var(--brand-gold) 24%, var(--border-subtle));
+}
+
+.pickupStatus > div {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 18px 16px;
+	background: var(--surface-card);
+}
+
+.pickupStatus .statusLabel {
+	font-family: var(--font-heading);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--brand-gold);
+}
+
+.pickupStatus strong {
+	font-family: var(--font-body);
+	font-size: clamp(17px, 2.4vw, 22px);
+	font-weight: 400;
+	color: var(--text-primary);
+}
+
+.pickupUpdatedAt {
+	margin-top: -9px;
+	font-size: 12px;
+	color: var(--text-muted);
+}
+
+.platzhirschHero .pickupHint {
+	max-width: 660px;
+	font-size: 15px;
+	line-height: 1.5;
+	color: var(--text-secondary);
+}
+
+.platzhirschActions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.platzhirschActions a,
+.platzhirschActions span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 50px;
+	padding: 12px 22px;
+	border: 1px solid var(--brand-gold);
+	border-radius: 7px;
+	font-family: var(--font-heading);
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: 0.025em;
+	text-decoration: none;
+	transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.platzhirschActions a:hover { transform: translateY(-1px); }
+.platzhirschActions .primaryAction { background: var(--brand-gold); color: var(--text-on-gold); }
+.platzhirschActions .primaryAction:hover { background: var(--brand-gold-hover); }
+.platzhirschActions .secondaryAction { background: transparent; color: var(--text-primary); }
+.platzhirschActions .secondaryAction:hover { background: color-mix(in srgb, var(--brand-gold) 10%, transparent); }
+.platzhirschActions .accountAction {
+	border-color: var(--border-subtle);
+	background: color-mix(in srgb, var(--surface-card) 75%, transparent);
+	color: var(--text-primary);
+}
+.platzhirschActions .accountAction:hover {
+	border-color: var(--brand-gold);
+	background: color-mix(in srgb, var(--brand-gold) 10%, var(--surface-card));
+}
+.platzhirschActions .disabledAction {
+	background: color-mix(in srgb, var(--brand-gold) 35%, var(--surface-raised));
+	color: var(--text-muted);
+	cursor: not-allowed;
+}
+
+.platzhirschInfo {
+	width: min(820px, 100%);
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.platzhirschInfo > div {
+	position: relative;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto auto;
+	column-gap: 14px;
+	row-gap: 6px;
+	padding: 22px;
+	border-top: 1px solid color-mix(in srgb, var(--brand-gold) 55%, var(--border-subtle));
+	background: color-mix(in srgb, var(--surface-card) 72%, transparent);
+}
+
+.platzhirschInfo .infoNumber {
+	grid-row: 1 / 3;
+	font-family: var(--font-heading);
+	font-size: 34px;
+	line-height: 1;
+	color: var(--brand-gold);
+	opacity: 0.8;
+}
+
+.platzhirschInfo strong {
+	font-family: var(--font-heading);
+	font-size: 22px;
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.platzhirschInfo span:not(.infoNumber) {
+	font-size: 15px;
+	line-height: 1.45;
+	color: var(--text-secondary);
+}
+
+@media (width <= 640px) {
+	.platzhirschHome { padding: 86px 16px 28px; gap: 30px; }
+	.homeAccountBar {
+		top: 12px;
+		left: 12px;
+		right: 12px;
+		justify-content: space-between;
+		box-sizing: border-box;
 	}
+	.homeAccountBar span {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.platzhirschHero { gap: 16px; }
+	.pickupStatus { grid-template-columns: 1fr; }
+	.pickupStatus > div { padding: 14px 16px; }
+	.platzhirschActions { width: 100%; flex-direction: column; }
+	.platzhirschActions a,
+	.platzhirschActions span { width: 100%; box-sizing: border-box; }
+	.platzhirschInfo { grid-template-columns: 1fr; }
 }

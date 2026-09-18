@@ -10,10 +10,6 @@ const API_BASE =
 	process.env.READY2ORDER_API_BASE ||
 	"https://api.ready2order.com/v1";
 
-const PUBLIC_APP_URL =
-	process.env.PUBLIC_APP_URL ||
-	"http://localhost:3050";
-
 if (!MONGODB_URI) {
 	throw new Error("MONGODB_URI missing");
 }
@@ -67,8 +63,8 @@ function createQrToken() {
 	return crypto.randomBytes(16).toString("hex");
 }
 
-function createQrUrl(qrToken) {
-	return `${PUBLIC_APP_URL}/${RESTAURANT_ID}?table=${qrToken}`;
+function createQrPath(qrToken) {
+	return `/q/${qrToken}`;
 }
 
 async function fetchAllTables() {
@@ -113,7 +109,6 @@ async function syncTables() {
 
 	console.log("MongoDB:", mongoose.connection.name);
 	console.log("Restaurant:", RESTAURANT_ID);
-	console.log("Public URL:", PUBLIC_APP_URL);
 
 	const tables = await fetchAllTables();
 
@@ -143,7 +138,7 @@ async function syncTables() {
 
 		const existingTable = existingByReadyId.get(table.table_id);
 		const qrToken = existingTable?.qrToken || createQrToken();
-		const qrUrl = existingTable?.qrUrl || createQrUrl(qrToken);
+		const qrUrl = createQrPath(qrToken);
 
 		return {
 			updateOne: {
@@ -214,7 +209,7 @@ async function syncTables() {
 	console.log(`Account mit ${tableIds.length} Tischen verknüpft`);
 	console.log("Aktueller Tisch-Bestand:", tableDocuments.length);
 
-	console.log("\nQR-Codes:");
+	console.log("\nQR-Pfade:");
 
 	for (const table of tableDocuments) {
 		console.log(`${table.name}: ${table.qrUrl}`);

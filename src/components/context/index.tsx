@@ -9,14 +9,17 @@ import { ToastManager } from "#components/base/ToastManager";
 import { AdminProvider } from "./Admin";
 import { OrderProvider } from "./Order";
 import { RestaurantProvider } from "./Restaurant";
+import { ThemeProvider } from "./Theme";
 
 export const GlobalProvider = ({ children }: ProviderProps) => {
 	return (
-		<XProvider>
-			<SessionProvider>
-				<Suspense>{children}</Suspense>
-			</SessionProvider>
-		</XProvider>
+		<ThemeProvider>
+			<XProvider>
+				<SessionProvider>
+					<Suspense>{children}</Suspense>
+				</SessionProvider>
+			</XProvider>
+		</ThemeProvider>
 	);
 };
 

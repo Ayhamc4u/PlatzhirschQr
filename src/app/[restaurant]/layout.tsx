@@ -1,13 +1,20 @@
+import Script from "next/script";
 import type { ReactNode } from "react";
 import { themeController } from "xtreme-ui";
 
 import { getThemeColor } from "#utils/database/helper/getThemeColor";
 
 export default async function RootLayout({ children, params }: IRootProps) {
-	const themeColor = await getThemeColor((await params).restaurant);
+	const { restaurant } = await params;
+	const themeColor = await getThemeColor(restaurant);
+
 	return (
 		<>
-			<script dangerouslySetInnerHTML={{ __html: themeController({ color: themeColor }) }} suppressHydrationWarning />
+			<Script
+				id={`restaurant-theme-${restaurant}`}
+				strategy="afterInteractive"
+				dangerouslySetInnerHTML={{ __html: themeController({ color: themeColor }) }}
+			/>
 			{children}
 		</>
 	);

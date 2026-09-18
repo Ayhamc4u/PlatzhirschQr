@@ -6,6 +6,12 @@ import { useQueryParams } from "#utils/hooks/useQueryParams";
 
 import "./navTopBar.scss";
 
+type TSubNavItem = {
+	label: string;
+	route: string;
+	href?: string;
+};
+
 const subNavItems = {
 	home: [
 		{ label: "overview", route: "overview" },
@@ -16,11 +22,7 @@ const subNavItems = {
 		{ label: "active", route: "active" },
 		{ label: "history", route: "history" },
 	],
-	settings: [
-		{ label: "account", route: "account" },
-		{ label: "menu", route: "menu" },
-	],
-} as Record<string, Array<{ label: string; route: string }>>;
+} as Record<string, TSubNavItem[]>;
 
 const NavTopBar = (props: TNavTopBarProps) => {
 	const { title, menuOpen, onClick } = props;
@@ -32,8 +34,9 @@ const NavTopBar = (props: TNavTopBarProps) => {
 	const currentNav = subNavItems[tab];
 
 	useEffect(() => {
-		if (tab && !currentNav?.some((item) => item.route === subTab)) queryParams.set({ subTab: currentNav?.[0]?.route });
-	}, [currentNav, queryParams, subTab, tab]);
+		if (!currentNav?.length) return;
+		if (!currentNav.some((item) => item.route === subTab)) queryParams.set({ subTab: currentNav[0].route });
+	}, [currentNav, queryParams, subTab]);
 
 	return (
 		<div className="navTopBar" id="navBar">
@@ -48,9 +51,20 @@ const NavTopBar = (props: TNavTopBarProps) => {
 					<span className="line2" />
 				</div>
 				<div className="navBarContainer">
-					{currentNav?.map((item, i) => {
+					{currentNav?.map((item) => {
+						const className = clsx("item", subTab === item.route && "active");
+
+						if (item.href) {
+							return (
+								<Link key={item.route} className={className} href={item.href}>
+									<span />
+									<p>{item.label}</p>
+								</Link>
+							);
+						}
+
 						return (
-							<div key={i} className={clsx("item", subTab === item?.route && "active")} onClick={() => queryParams.set({ subTab: item?.route })}>
+							<div key={item.route} className={className} onClick={() => queryParams.set({ subTab: item.route })}>
 								<span />
 								<p>{item.label}</p>
 							</div>

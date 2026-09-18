@@ -19,9 +19,9 @@ const NavSideBar = (props: TNavSideBar) => {
 
 	const classList = clsx("menu", head && "head", foot && "foot");
 
-	const onNavClick = (tab: string) => {
-		if (tab === "signout") return router.push("/logout");
-		queryParams.set({ tab });
+	const onNavClick = (nextTab: string) => {
+		if (nextTab === "signout") return router.push("/logout");
+		queryParams.set({ tab: nextTab });
 	};
 
 	useEffect(() => {
@@ -31,17 +31,22 @@ const NavSideBar = (props: TNavSideBar) => {
 	return (
 		<div className="navSideBar">
 			<div className={classList}>
-				{navItems.map((item, key) => {
+				{navItems.map((item) => {
 					if (item.value === "signout" && session.status !== "authenticated") return null;
 
 					const active = tab === item.value;
 					return (
-						<div key={key} className={clsx("navItem", active && "active")} onClick={() => onNavClick(item.value)}>
-							<div className="navItemContent">
-								<Icon code={item.icon} size={20} set={active ? "classic" : "duotone"} type="solid" />
-								<p>{item.label}</p>
-							</div>
-						</div>
+						<button
+							key={item.value}
+							type="button"
+							className={clsx("navItem", active && "active")}
+							onClick={() => onNavClick(item.value)}
+						>
+							<span className="navItemContent">
+								<Icon code={item.icon} style={{ fontSize: 20 }} set={active ? "classic" : "duotone"} type="solid" />
+								<span className="navLabel">{item.label}</span>
+							</span>
+						</button>
 					);
 				})}
 			</div>

@@ -1,15 +1,16 @@
 import clsx from "clsx";
 
+import { formatEuro } from "#utils/helper/currency";
+
 import "./cartTaxItem.scss";
 
 const CartTaxItem = (props: TCartTaxItemProps) => {
 	const { className, name, size = "default", subtitle, taxPercent, amount, onClick } = props;
-	const roundAmount = Math.round(amount * 100) / 100;
 	return (
 		<div className={clsx("cartTaxItem", className, size)} onClick={onClick}>
 			<p className="taxName">{name + (taxPercent ? ` (${taxPercent}%)` : "")}</p>
 			{subtitle && <p className="subtitle">{subtitle}</p>}
-			<p className="taxAmount rupee">{roundAmount}</p>
+			<p className="taxAmount">{formatEuro(amount)}</p>
 		</div>
 	);
 };

@@ -1,160 +1,120 @@
 .quantityButton {
-	--quantityButtonHeight: 28px;
+	--quantityButtonHeight: 40px;
 
 	position: relative;
 	display: flex;
+	min-width: 96px;
 	height: var(--quantityButtonHeight);
 	user-select: none;
 
 	.quantity {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: grid;
+		place-items: center;
+		padding: 0;
+		appearance: none;
 		border-radius: 9999px;
 		cursor: pointer;
-		font-size: 12px;
-		font-variation-settings: 'wdth' 75, 'wght' 500;
+		font-size: 14px;
+		font-variation-settings: 'wdth' 75, 'wght' 700;
 		background-color: transparent;
 		color: hsl(var(--colorBrandPrimary));
 		border: 1px solid hsl(var(--colorBrandPrimary));
+		touch-action: manipulation;
+		line-height: 1;
 
 		> span {
-			display: block;
+			display: grid;
+			place-items: center;
 			width: 100%;
 			height: 100%;
-			background-color: hsl(var(--colorBrandPrimary));
+			line-height: 1;
+			background-color: currentColor;
 		}
 
-		> i {
-			color: inherit;
-		}
-
-		&:active {
-			color: var(--colorBackgroundPrimary);
-			background-color: hsl(var(--colorBrandPrimary));
-
-			> span {
-				background-color: var(--colorBackgroundPrimary);
-			}
-		}
+		&:active { transform: scale(0.94); }
 
 		&.increase {
 			position: absolute;
-			top: 0; right: 0;
+			top: 0;
+			right: 0;
 			width: 100%;
 			height: 100%;
-			text-transform: uppercase;
-			transition: width 0.1s ease-out, font-size 0s;
+			transition: width 0.15s ease;
 		}
 	}
 
 	.hiddenContainer {
 		display: flex;
+		align-items: center;
 		width: 100%;
 		height: 100%;
+		visibility: hidden;
 
 		.decrease {
 			width: var(--quantityButtonHeight);
 			height: var(--quantityButtonHeight);
-			transform: scale(0);
-			transition: transform 0.1s ease-out;
+			flex: 0 0 var(--quantityButtonHeight);
 		}
 
 		.value {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			border-radius: 9999px;
-			padding: 0 12px;
-			border: 1px solid transparent;
-			margin: 0 var(--quantityButtonHeight) 0 0;
+			flex: 1;
+			height: var(--quantityButtonHeight);
+			padding: 0 5px;
+			margin-right: var(--quantityButtonHeight);
 
 			p {
 				margin: 0;
 				font-size: 14px;
-				font-variation-settings: 'wdth' 75, 'wght' 600;
-			}
-
-			span {
-				display: block;
-				width: 15px;
-				height: 100%;
-				mask-size: 8px;
-				mask-repeat: no-repeat;
-				mask-position: center;
-				background-color: hsl(var(--colorBrandPrimary));
-				margin-left: -3px;
+				line-height: 1;
+				font-variation-settings: 'wdth' 75, 'wght' 700;
 			}
 		}
 	}
 
-	&.disabled {
-		.value {
-			span {
-				background-color: var(--colorContentPrimary);
-			}
-		}
-
-		.increase {
-			display: none;
-		}
-
-		.hiddenContainer {
-			.value {
-				border-color: var(--colorContentTertiary);
-				margin: 0 10px 0 0;
-			}
-		}
-	}
-
-	&.filled {
-		.quantity {
-			color: white;
-			background-color: hsl(var(--colorBrandPrimary));
-
-			> span {
-				background-color: var(--colorBackgroundPrimary);
-			}
-		}
+	&.filled .quantity {
+		color: #11100e;
+		background-color: #d9a441;
+		border-color: #d9a441;
 	}
 
 	&.quantityValue {
-		.hiddenContainer {
-			.decrease {
-				transform: scale(1);
-				transition-delay: 0.05s;
-			}
-		}
+		--quantityButtonHeight: 34px;
+		min-width: 94px;
+		height: var(--quantityButtonHeight);
+		border: 1px solid color-mix(in srgb, #d9a441 58%, transparent);
+		border-radius: 9999px;
+		background: color-mix(in srgb, #d9a441 9%, var(--colorBackgroundPrimary));
 
-		.increase {
-			width: var(--quantityButtonHeight);
-			font-size: 20px;
-		}
+		.hiddenContainer { visibility: visible; }
+		.increase { width: var(--quantityButtonHeight); }
+		.quantity { border: 0; }
+		.value p { font-size: 13px; }
+	}
+
+	&.disabled {
+		opacity: 0.4;
+		pointer-events: none;
 	}
 }
 
 @media (width <= 750px) {
 	.quantityButton {
-		--quantityButtonHeight: 35px;
+		--quantityButtonHeight: 42px;
+		min-width: 104px;
 
-		.quantity {
-			> span {
-				mask-size: 13px;
-			}
-		}
-
-		&.disabled {
-			.hiddenContainer {
-				.value {
-					padding: 0 17px 0 15px;
-				}
-			}
+		&.quantityValue {
+			--quantityButtonHeight: 34px;
+			min-width: 94px;
 		}
 	}
 }
 
-@media (width <= 530px) {
+@media (width <= 420px) {
 	.quantityButton {
-		transform: scale(0.9);
+		min-width: 96px;
+		&.quantityValue { min-width: 90px; }
 	}
 }

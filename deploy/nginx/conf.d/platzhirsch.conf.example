@@ -1,0 +1,51 @@
+# WICHTIG:
+# Den Beispiel-CIDR unten vor Produktivbetrieb durch das echte Bestell-WLAN ersetzen.
+# Das Bestell-WLAN muss order.platzhirschzwettl.at per lokalem DNS direkt auf diesen
+# Nginx-Server auflösen. Öffentliche Zugriffe über Cloudflare bleiben dadurch nicht freigeschaltet.
+geo $remote_addr $platzhirsch_venue_access {
+    default 0;
+    127.255.255.255/32 1; # TODO: durch echten Bestell-WLAN-CIDR ersetzen, z. B. 192.168.50.0/24
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name order.platzhirschzwettl.at;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name order.platzhirschzwettl.at;
+
+    ssl_certificate /etc/letsencrypt/live/order.platzhirschzwettl.at/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/order.platzhirschzwettl.at/privkey.pem;
+
+    location / {
+        proxy_pass http://platzhirschqr:3000;
+
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+
+        # Nicht den vom Client gesendeten Header übernehmen. Nginx setzt den Wert selbst
+        # ausschließlich anhand der Quell-IP des Bestell-WLANs.
+        proxy_set_header X-Platzhirsch-Venue $platzhirsch_venue_access;
+
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}

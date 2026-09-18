@@ -18,6 +18,8 @@ interface ExtendedMediaTrackCapabilities extends MediaTrackCapabilities {
 	zoom?: boolean;
 }
 
+const QR_TOKEN_PATTERN = /^[a-f0-9]{32}$/i;
+
 const ScannerClient = () => {
 	const checkInterval = useRef<NodeJS.Timeout | null>(null);
 
@@ -93,26 +95,33 @@ const ScannerClient = () => {
 
 	const handleScan = (detectedCodes: unknown) => {
 		const codes = detectedCodes as IDetectedBarcode[];
-		if (codes && codes.length > 0 && !isScanning) {
-			const result = codes[0];
-			const url = result.rawValue || result.raw_value;
+		if (!codes?.length || isScanning) return;
 
-			if (url) {
-				try {
-					const urlObj = new URL(url);
-					const isOrderWorder = urlObj.hostname.includes("orderworder");
-					const hasTable = urlObj.searchParams.has("table");
+		const result = codes[0];
+		const rawUrl = result.rawValue || result.raw_value;
+		if (!rawUrl) return;
 
-					if (isOrderWorder && hasTable) {
-						setIsScanning(true);
-						window.location.replace(urlObj.pathname + urlObj.search + urlObj.hash);
-					} else {
-						toast.error("Not an OrderWorder QR");
-					}
-				} catch {
-					toast.error("Invalid QR Code");
-				}
+		try {
+			const urlObj = new URL(rawUrl);
+			const stableQrMatch = urlObj.pathname.match(/^\/q\/([^/]+)\/?$/i);
+			const stableQrToken = stableQrMatch?.[1];
+			const legacyTableToken = urlObj.searchParams.get("table");
+
+			if (stableQrToken && QR_TOKEN_PATTERN.test(stableQrToken)) {
+				setIsScanning(true);
+				window.location.replace(`/q/${encodeURIComponent(stableQrToken)}`);
+				return;
 			}
+
+			if (legacyTableToken && QR_TOKEN_PATTERN.test(legacyTableToken)) {
+				setIsScanning(true);
+				window.location.replace(`${urlObj.pathname}?table=${encodeURIComponent(legacyTableToken)}`);
+				return;
+			}
+
+			toast.error("Kein gültiger Platzhirsch Tisch-QR-Code");
+		} catch {
+			toast.error("Ungültiger QR-Code");
 		}
 	};
 
@@ -120,23 +129,23 @@ const ScannerClient = () => {
 		const errorObj = err as Error;
 		if (errorObj?.name === "NotAllowedError" || errorObj?.name === "PermissionDeniedError") {
 			setHasPermission(false);
-			setError("Camera permission denied. Please allow access.");
+			setError("Kamerazugriff verweigert. Bitte erlaube den Zugriff im Browser.");
 		} else if (errorObj?.name === "NotFoundError" || errorObj?.name === "DevicesNotFoundError") {
-			setError("No camera found on this device.");
+			setError("Auf diesem Gerät wurde keine Kamera gefunden.");
 		} else {
 			console.warn("Scanner error:", errorObj);
 		}
 	};
 
 	const cameraOptions = devices.map((d, index) => ({
-		label: d?.label?.replace(/\s*\(.*?\)\s*/g, "") || `Camera ${index + 1}`,
+		label: d?.label?.replace(/\s*\(.*?\)\s*/g, "") || `Kamera ${index + 1}`,
 		value: d.deviceId,
 	}));
 
 	return (
 		<div className="scannerPage">
-			<h4 className="scannerHeader">Order Worder</h4>
-			<p className="scannerFooter">Scan QR to Order</p>
+			<h4 className="scannerHeader">Platzhirsch</h4>
+			<p className="scannerFooter">Tisch-QR-Code scannen</p>
 			{devices.length > 0 && (
 				<div className="cameraSelectWrapper">
 					<select
@@ -160,7 +169,7 @@ const ScannerClient = () => {
 					<div className="errorMessage">
 						<Icon code="f071" type="solid" className="errorIcon" />
 						<p>{error}</p>
-						{!hasPermission && <p className="hint">Check your browser settings.</p>}
+						{!hasPermission && <p className="hint">Bitte prüfe die Browser-Berechtigungen.</p>}
 					</div>
 				) : (
 					<Scanner
